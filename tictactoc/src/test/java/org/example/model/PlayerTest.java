@@ -10,7 +10,7 @@ public class PlayerTest {
     // Example test case
     @Test
     public void testPlayerInstantiation() {
-        Player player = new Player("Sony","X");
+        Player player = new Player("Sony", "X");
         assert player.name().equals("Sony");
         assert player.symbol().equals("X");
     }

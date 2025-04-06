@@ -11,5 +11,5 @@ public class Cell {
     private int row;
     private int column;
     @Builder.Default
-    private  char value=' ';
+    private char value = ' ';
 }

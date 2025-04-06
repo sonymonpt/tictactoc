@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class Board {
-    private Cell[][] cells;
-    private int size;
+    private final Cell[][] cells;
+    private final int size;
 
     public Board(int size) {
         this.size = size;

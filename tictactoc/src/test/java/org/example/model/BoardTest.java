@@ -13,7 +13,7 @@ public class BoardTest {
         // Check if the board is initialized correctly
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                assertEquals(" ", board.getCells()[i][j].getValue());
+                assertEquals(' ', board.getCells()[i][j].getValue());
             }
         }
     }

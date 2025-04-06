@@ -1,4 +1,5 @@
 package org.example.model;
 
 
-public record Player(String name, String symbol) {}
+public record Player(String name, String symbol) {
+}
