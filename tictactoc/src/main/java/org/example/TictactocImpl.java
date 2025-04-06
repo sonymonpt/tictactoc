@@ -23,35 +23,37 @@ public class TictactocImpl implements Tictactoc {
             return ' ';
         }
 
+        // Check rows and columns
         for (int i = 0; i < board.getSize(); i++) {
-            if (board.getCells()[i][0].getValue() == board.getCells()[i][1].getValue() &&
-                    board.getCells()[i][1].getValue() == board.getCells()[i][2].getValue() &&
-                    board.getCells()[i][0].getValue() != ' ') {
+            if (isWinningLine(board, i, 0, 0, 1)) {
                 return board.getCells()[i][0].getValue();
             }
-        }
-
-        for (int i = 0; i < board.getSize(); i++) {
-            if (board.getCells()[0][i].getValue() == board.getCells()[1][i].getValue() &&
-                    board.getCells()[1][i].getValue() == board.getCells()[2][i].getValue() &&
-                    board.getCells()[0][i].getValue() != ' ') {
+            if (isWinningLine(board, 0, i, 1, 0)) {
                 return board.getCells()[0][i].getValue();
             }
+
         }
 
-        if (board.getCells()[0][0].getValue() == board.getCells()[1][1].getValue() &&
-                board.getCells()[1][1].getValue() == board.getCells()[2][2].getValue() &&
-                board.getCells()[0][0].getValue() != ' ') {
+        // Check main diagonal
+        if (isWinningLine(board, 0, 0, 1, 1)) {
             return board.getCells()[0][0].getValue();
         }
 
-        if (board.getCells()[0][2].getValue() == board.getCells()[1][1].getValue() &&
-                board.getCells()[1][1].getValue() == board.getCells()[2][0].getValue() &&
-                board.getCells()[0][2].getValue() != ' ') {
-            return board.getCells()[0][2].getValue();
+        // Check anti-diagonal
+        if (isWinningLine(board, 0, board.getSize() - 1, 1, -1)) {
+            return board.getCells()[0][board.getSize() - 1].getValue();
         }
 
         return moves == board.getSize() * board.getSize() ? 'D' : ' ';
+    }
+
+    private boolean isWinningLine(Board board, int row, int col, int rowIncrement, int colIncrement) {
+        char first = board.getCells()[row][col].getValue();
+        if (first == ' ') {
+            return false;
+        }
+        return java.util.stream.IntStream.range(1, board.getSize())
+                .allMatch(i -> board.getCells()[row + i * rowIncrement][col + i * colIncrement].getValue() == first);
     }
 
     @Override

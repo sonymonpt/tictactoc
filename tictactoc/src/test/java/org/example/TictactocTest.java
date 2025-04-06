@@ -45,6 +45,22 @@ public class TictactocTest {
         Assertions.assertEquals(result.charAt(0), tictactoc.checkWin(board));
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "XXXO,0X0O,XOOX,00XX,' '","XXXO,0X0O,XOXX,00XX,X",
+            "XXXX,0X0O,XOOX,00XX,'X"
+
+    })
+    public void testFourSizeBoardCheckWin(String row1, String row2, String row3,String row4, String result) throws NoSuchFieldException, IllegalAccessException {
+
+        tictactoc.setupBoard(4, List.of(new Player("Sony", "X"), new Player("Ravi", "O")));
+        Board board = createfourBoard(row1, row2, row3,row4);
+        // Simulate moves above 5
+        tictactoc.setMoves(8);
+
+        Assertions.assertEquals(result.charAt(0), tictactoc.checkWin(board));
+    }
+
     @Test
     public void testBoardIsNull() {
         Assertions.assertEquals(' ', tictactoc.checkWin(null));
@@ -80,6 +96,32 @@ public class TictactocTest {
         board.getCells()[2][0].setValue(row3.charAt(0));
         board.getCells()[2][1].setValue(row3.charAt(1));
         board.getCells()[2][2].setValue(row3.charAt(2));
+        return board;
+    }
+
+    private Board createfourBoard(String row1, String row2, String row3,String row4) {
+        Board board = new Board(4);
+
+        board.getCells()[0][0].setValue(row1.charAt(0));
+        board.getCells()[0][1].setValue(row1.charAt(1));
+        board.getCells()[0][2].setValue(row1.charAt(2));
+        board.getCells()[0][3].setValue(row1.charAt(3));
+
+        board.getCells()[1][0].setValue(row2.charAt(0));
+        board.getCells()[1][1].setValue(row2.charAt(1));
+        board.getCells()[1][2].setValue(row2.charAt(2));
+        board.getCells()[1][3].setValue(row2.charAt(3));
+
+        board.getCells()[2][0].setValue(row3.charAt(0));
+        board.getCells()[2][1].setValue(row3.charAt(1));
+        board.getCells()[2][2].setValue(row3.charAt(2));
+        board.getCells()[2][3].setValue(row3.charAt(3));
+
+        board.getCells()[3][0].setValue(row4.charAt(0));
+        board.getCells()[3][1].setValue(row4.charAt(1));
+        board.getCells()[3][2].setValue(row4.charAt(2));
+        board.getCells()[3][3].setValue(row4.charAt(3));
+
         return board;
     }
 }
