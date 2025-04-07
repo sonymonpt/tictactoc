@@ -12,15 +12,16 @@ public class TictactocImpl implements Tictactoc {
     private Board board;
     private List<Player> players;
     private int moves = 0;
+    private static final char EMPTY_CELL = ' ';
 
     @Override
     public char checkWin(Board board) {
         if (isNull(board)) {
-            return ' ';
+            return EMPTY_CELL;
         }
 
         if (moves < board.getSize() * 2 - 1) {
-            return ' ';
+            return EMPTY_CELL;
         }
 
         // Check rows and columns
@@ -44,7 +45,7 @@ public class TictactocImpl implements Tictactoc {
             return board.getCells()[0][board.getSize() - 1].getValue();
         }
 
-        return moves == board.getSize() * board.getSize() ? 'D' : ' ';
+        return moves == board.getSize() * board.getSize() ? 'D' : EMPTY_CELL;
     }
 
     private boolean isWinningLine(Board board, int row, int col, int rowIncrement, int colIncrement) {

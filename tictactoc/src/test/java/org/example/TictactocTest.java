@@ -12,6 +12,8 @@ import java.util.List;
 
 public class TictactocTest {
 
+    private static final char EMPTY_CELL = ' ';
+
     static Tictactoc tictactoc;
 
     @BeforeEach
@@ -26,8 +28,22 @@ public class TictactocTest {
 
         tictactoc.setupBoard(3, List.of(player1, player2));
         Assertions.assertEquals(3, tictactoc.getBoard().getSize());
-        Assertions.assertEquals(' ', tictactoc.getBoard().getCells()[0][0].getValue());
+        Assertions.assertEquals(EMPTY_CELL, tictactoc.getBoard().getCells()[0][0].getValue());
         Assertions.assertEquals("Sony", tictactoc.getPlayers().getFirst().name());
+    }
+
+    @Test
+    public void testBoardIsNull() {
+        Assertions.assertEquals(EMPTY_CELL, tictactoc.checkWin(null));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"XOX,OOX,OXO,' '", "XOX,OOO,OXO,' '"})
+    public void testMinMove(String row1, String row2, String row3, String result) {
+        Board board = createBoard(row1, row2, row3);
+        // Simulate moves below 5
+        tictactoc.setMoves(4);
+        Assertions.assertEquals(result.charAt(0), tictactoc.checkWin(board));
     }
 
     @ParameterizedTest
@@ -60,21 +76,6 @@ public class TictactocTest {
 
         Assertions.assertEquals(result.charAt(0), tictactoc.checkWin(board));
     }
-
-    @Test
-    public void testBoardIsNull() {
-        Assertions.assertEquals(' ', tictactoc.checkWin(null));
-    }
-
-    @ParameterizedTest
-    @CsvSource({"XOX,OOX,OXO,' '", "XOX,OOO,OXO,' '"})
-    public void testMinMove(String row1, String row2, String row3, String result) {
-        Board board = createBoard(row1, row2, row3);
-        // Simulate moves below 5
-        tictactoc.setMoves(4);
-        Assertions.assertEquals(result.charAt(0), tictactoc.checkWin(board));
-    }
-
     @ParameterizedTest
     @CsvSource({"XOX,OOX,OXO,D", "XOX,OOO,OXO,O"})
     public void testDrawMove(String row1, String row2, String row3, String result) {
